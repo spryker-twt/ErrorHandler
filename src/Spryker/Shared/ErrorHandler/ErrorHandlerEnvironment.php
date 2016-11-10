@@ -57,7 +57,9 @@ class ErrorHandlerEnvironment
     {
         $errorLevel = error_reporting();
         $errorHandler = function ($severity, $message, $file, $line) {
-            throw new ErrorException($message, 0, $severity, $file, $line);
+             if (error_reporting() !== 0) {
+                throw new ErrorException($message, 0, $severity, $file, $line);
+            }
         };
 
         set_error_handler($errorHandler, $errorLevel);
